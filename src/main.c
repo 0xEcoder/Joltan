@@ -2,21 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-
-const char *vertSrc =
-    "#version 330 core\n"
-    "layout (location = 0) in vec2 aPos;\n"
-    "void main() {\n"
-    "    gl_Position = vec4(aPos, 0.0, 1.0);\n"
-    "}\n";
-
-const char *fragSrc =
-    "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main() {\n"
-    "    FragColor = vec4(1.0, 0.5, 0.2, 1.0);\n"
-    "}\n";
+#include "mats.h"
 
 int main(void)
 {
@@ -43,12 +29,12 @@ int main(void)
     glewExperimental = GL_TRUE;  // add this    
     glewInit();
 
-     GLuint vert = glCreateShader(GL_VERTEX_SHADER);
+    GLuint vert = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vert, 1, &vertSrc, NULL);
     glCompileShader(vert);
 
     GLuint frag = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(frag, 1, &fragSrc, NULL);
+    glShaderSource(frag, 1, &fragOrange, NULL);
     glCompileShader(frag);
 
     GLuint shader = glCreateProgram();
