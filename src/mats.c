@@ -1,4 +1,4 @@
-#include "mats.h"
+#include "include/mats.h"
     const char *vertSrc =
     "#version 330 core\n"
     "layout (location = 0) in vec2 aPos;\n"
