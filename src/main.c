@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "mats.h"
+#include "include/mats.h"
 
 int main(void)
 {

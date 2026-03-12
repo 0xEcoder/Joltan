@@ -14,5 +14,5 @@ mac:
 	$(CC) $(CFLAGS) $(SRC) $(MACLIBS) -o $(OUT)
 
 clean:
-	rm -f $(OUT)
+	rm -rf $(OUT)
 
