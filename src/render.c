@@ -4,9 +4,13 @@
 
 GLuint shader;
 GLuint VAO, VBO;
+GLuint MVP_loc;
 
 void render_init(void)
 {
+    glEnable(GL_DEPTH_TEST);
+
+    /* create shaders */
     GLuint vert = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vert, 1, &vertSrc, NULL);
     glCompileShader(vert);
@@ -15,6 +19,7 @@ void render_init(void)
     glShaderSource(frag, 1, &fragOrange, NULL);
     glCompileShader(frag);
 
+    /* create shader program */
     shader = glCreateProgram();
     glAttachShader(shader, vert);
     glAttachShader(shader, frag);
@@ -23,10 +28,14 @@ void render_init(void)
     glDeleteShader(vert);
     glDeleteShader(frag);
 
+    /* cache uniform location */
+    MVP_loc = glGetUniformLocation(shader, "MVP");
+
+    /* triangle vertices */
     float verts[] = {
-        -0.5f, -0.5f,
-         0.5f, -0.5f,
-         0.0f,  0.5f
+        -0.5f, -0.5f,  0.0f,
+         0.5f, -0.5f,  0.0f,
+         0.0f,  0.5f, -0.5f
     };
 
     glGenVertexArrays(1, &VAO);
@@ -37,13 +46,23 @@ void render_init(void)
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 }
 
 void render_draw(void)
 {
     glUseProgram(shader);
+
+    float mvp[16] = {
+        1,0,0,0,
+        0,1,0,0,
+        0,0,1,0,
+        0,0,0,1
+    };
+
+    glUniformMatrix4fv(MVP_loc, 1, GL_FALSE, mvp);
+
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }

@@ -1,7 +1,7 @@
 #include "include/mats.h"
     const char *vertSrc =
     "#version 330 core\n"
-    "layout (location = 0) in vec2 aPos;\n"
+    "layout (location = 0) in vec3 aPos;\n"
     "void main() {\n"
     "    gl_Position = vec4(aPos, 0.0, 1.0);\n"
     "}\n";
