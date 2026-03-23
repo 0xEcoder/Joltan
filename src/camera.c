@@ -2,7 +2,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
-#include "include/mats.h"
+#include "include/camera.h"
 #include "include/render.h"
 
 // Shader sources

@@ -3,8 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "include/mats.h"
+#include "include/camera.h"
 #include "include/render.h"
+#define TITLE "Window"
 
 int main(void)
 {
@@ -14,7 +15,7 @@ int main(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Pyramid Demo", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1280, 720, TITLE, NULL, NULL);
     if (!window) {
         glfwTerminate();
         return -1;
