@@ -1,7 +1,7 @@
 #include <GL/glew.h>
 #include <stdio.h>
 #include "include/render.h"
-#include "include/mats.h"
+#include "include/camera.h"
 
 GLuint shader;
 GLuint VAO, VBO;
