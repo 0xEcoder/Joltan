@@ -57,35 +57,8 @@ void render_init(void)
         printf("Warning: Uniform 'MVP' not found in shader.\n");
     }
 
-    // ----- Vertex data (pyramid) -----
-    float pyramidVerts[] = {
-        // Base (two triangles)
-       -0.5f, 0.0f, -0.5f,   0.5f, 0.0f, -0.5f,   0.5f, 0.0f, 0.5f,
-       -0.5f, 0.0f, -0.5f,   0.5f, 0.0f, 0.5f,   -0.5f, 0.0f, 0.5f,
 
-        // Side 1
-       -0.5f, 0.0f, -0.5f,   0.5f, 0.0f, -0.5f,   0.0f, 0.8f, 0.0f,
-        // Side 2
-        0.5f, 0.0f, -0.5f,   0.5f, 0.0f, 0.5f,    0.0f, 0.8f, 0.0f,
-        // Side 3
-        0.5f, 0.0f, 0.5f,   -0.5f, 0.0f, 0.5f,    0.0f, 0.8f, 0.0f,
-        // Side 4
-       -0.5f, 0.0f, 0.5f,   -0.5f, 0.0f, -0.5f,   0.0f, 0.8f, 0.0f
-    };
 
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(pyramidVerts), pyramidVerts, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    // Unbind (optional, good practice)
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
 }
 
 void render_draw(float aspect)   // added aspect parameter
@@ -113,9 +86,7 @@ void render_draw(float aspect)   // added aspect parameter
 
     glUniformMatrix4fv(MVP_loc, 1, GL_FALSE, mvp);
 
-    // Draw the pyramid
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 18);   // 6 triangles × 3 vertices = 18
+
 
     // Unbind (optional)
     glBindVertexArray(0);

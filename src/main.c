@@ -5,7 +5,8 @@
 
 #include "include/camera.h"
 #include "include/render.h"
-#define TITLE "Window"
+#include "include/shapes.h"
+#define TITLE "Joltan ALPHA 0.01"
 
 int main(void)
 {
@@ -37,6 +38,7 @@ int main(void)
     glEnable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
+    init_pyramid(pyramidVerts, sizeof(pyramidVerts));
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -48,6 +50,7 @@ int main(void)
 
         render_draw(aspect);
 
+        draw_pyramid();
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
