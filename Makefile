@@ -15,4 +15,5 @@ mac:
 
 clean:
 	rm -rf $(OUT)
-
+run:
+	$(OUT)
