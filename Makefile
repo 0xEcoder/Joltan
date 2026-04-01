@@ -1,24 +1,23 @@
 CC = gcc
 CFLAGS = -Wall -O2
-SRC = $(wildcard src/*.c) \
-      src/external/glew/src/glew.c \
-      $(wildcard src/external/glfw/src/*.c)
+SRC = $(wildcard src/*.c)
+
 
 OUT = bin/app
 
 # Platform-specific libraries
 ifeq ($(OS),Windows_NT)
-    LIBS = -lopengl32
+    LIBS = -lopengl32 -lglew32 -lgdi32 -luser32 -lkernel32
 else ifeq ($(shell uname),Darwin)
-    LIBS = -framework OpenGL
+    LIBS = -framework OpenGL -lglfw -lGLEW
 else
-    LIBS = -lGL
+    LIBS = -lGL -lglfw -lGLEW -lGL
 endif
 
 all: $(OUT)
 
 $(OUT): $(SRC)
-	$(CC) $(CFLAGS) $(SRC) $(LIBS) -I src/external/glew/include -I src/external/glfw/include -o $(OUT)
+	$(CC) $(CFLAGS) $(SRC) $(LIBS) -o $(OUT)
 
 clean:
 	rm -rf $(OUT)

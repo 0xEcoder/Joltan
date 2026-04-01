@@ -18,7 +18,7 @@ elseif(APPLE)
     set(LIBS glfw GLEW "-framework OpenGL")
 else()
     # Linux
-    set(LIBS glfw GLEW GL)
+    set(LIBS glfw GLEW GL m)
 endif()
 
 # Add executable
