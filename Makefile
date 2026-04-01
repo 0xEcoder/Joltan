@@ -7,11 +7,11 @@ OUT = bin/app
 
 # Platform-specific libraries
 ifeq ($(OS),Windows_NT)
-    LIBS = -lopengl32 -lglew32 -lgdi32 -luser32 -lkernel32
+    LIBS = -lopengl32 -lglew32 -lgdi32 -luser32 -lkernel32 -lm
 else ifeq ($(shell uname),Darwin)
-    LIBS = -framework OpenGL -lglfw -lGLEW
+    LIBS = -framework OpenGL -lglfw -lGLEW -lm
 else
-    LIBS = -lGL -lglfw -lGLEW -lGL
+    LIBS = -lGL -lglfw -lGLEW -lGL -lm
 endif
 
 all: $(OUT)
