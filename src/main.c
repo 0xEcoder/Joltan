@@ -38,6 +38,37 @@ int main(void)
     glEnable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
+    float pyramidVerts[] = {
+        // Front
+        0.0f,  0.5f,  0.0f,
+       -0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f,  0.5f,
+
+       // Right
+        0.0f,  0.5f,  0.0f,
+        0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f, -0.5f,
+
+       // Back
+        0.0f,  0.5f,  0.0f,
+        0.5f, -0.5f, -0.5f,
+       -0.5f, -0.5f, -0.5f,
+
+       // Left
+        0.0f,  0.5f,  0.0f,
+       -0.5f, -0.5f, -0.5f,
+       -0.5f, -0.5f,  0.5f,
+
+       // Base (2 triangles)
+       -0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f, -0.5f,
+
+       -0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f, -0.5f,
+       -0.5f, -0.5f, -0.5f,
+   };
+
     init_pyramid(pyramidVerts, sizeof(pyramidVerts));
     while (!glfwWindowShouldClose(window))
     {
