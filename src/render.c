@@ -88,7 +88,7 @@ void render_draw(float aspect)   // added aspect parameter
 
 
 
-    // Unbind (optional)
-    glBindVertexArray(0);
-    glUseProgram(0);
+    // Unbind (optional) hides triange for some reason
+    // glBindVertexArray(0);
+    // glUseProgram(0);
 }
