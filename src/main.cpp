@@ -6,6 +6,8 @@
 #include "include/camera.hpp"
 #include "include/render.hpp"
 #include "include/shapes.hpp"
+#include "include/GameObject.hpp"
+
 #define TITLE "Joltan ALPHA 0.01"
 
 int main(void) {
@@ -69,6 +71,7 @@ int main(void) {
     };
 
     init_pyramid(pyramidVerts, sizeof(pyramidVerts));
+    GameObject pyramid;
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -77,7 +80,10 @@ int main(void) {
         glfwGetFramebufferSize(window, &w, &h);
         float aspect = (h > 0) ? (float) w / (float) h : 1.0f;
 
-        render_draw(aspect);
+        pyramid.rotation.y += 0.01f;
+
+        render_draw(aspect, pyramid.getModelMatrix());
+        draw_pyramid();
 
         draw_pyramid();
         glfwSwapBuffers(window);
@@ -87,10 +93,3 @@ int main(void) {
     glfwTerminate();
     return 0;
 }
-
-struct GameObject {
-    public:
-        ;
-
-
-};
