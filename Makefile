@@ -1,19 +1,27 @@
 CC = gcc
 CFLAGS = -Wall -O2
+SRC = $(wildcard src/*.c) \
+      src/external/glew/src/glew.c \
+      $(wildcard src/external/glfw/src/*.c)
 
-SRC = $(wildcard src/*.c)
 OUT = bin/app
 
-LINUXLIBS = -lglfw -lGLEW -lGL
-MACLIBS   = -lglfw -lGLEW -framework OpenGL
+# Platform-specific libraries
+ifeq ($(OS),Windows_NT)
+    LIBS = -lopengl32
+else ifeq ($(shell uname),Darwin)
+    LIBS = -framework OpenGL
+else
+    LIBS = -lGL
+endif
 
-linux:
-	$(CC) $(CFLAGS) $(SRC) $(LINUXLIBS) -o $(OUT)
+all: $(OUT)
 
-mac:
-	$(CC) $(CFLAGS) $(SRC) $(MACLIBS) -o $(OUT)
+$(OUT): $(SRC)
+	$(CC) $(CFLAGS) $(SRC) $(LIBS) -I src/external/glew/include -I src/external/glfw/include -o $(OUT)
 
 clean:
 	rm -rf $(OUT)
-run:
-	$(OUT)
+
+run: $(OUT)
+	./$(OUT)
