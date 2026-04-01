@@ -1,7 +1,10 @@
 #include <GL/glew.h>
-#include <stdio.h>
+#include <iostream>
 #include "include/render.hpp"
 #include "include/camera.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 GLuint shader;
 GLuint VAO, VBO;
@@ -21,7 +24,7 @@ void render_init(void) {
     glGetShaderiv(vert, GL_COMPILE_STATUS, &success);
     if (!success) {
         glGetShaderInfoLog(vert, sizeof(infoLog), NULL, infoLog);
-        printf("Vertex shader compilation failed:\n%s\n", infoLog);
+        std::cout << "Vertex shader compilation failed:\n%s\n" << infoLog << std::endl;
     }
 
     // ----- Fragment shader -----

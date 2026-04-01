@@ -87,3 +87,10 @@ int main(void) {
     glfwTerminate();
     return 0;
 }
+
+struct GameObject {
+    public:
+        ;
+
+
+};
