@@ -6,13 +6,23 @@ set(CMAKE_C_STANDARD 11)
 # Source files
 file(GLOB SRC "src/*.c")
 
-add_executable(app ${SRC})
+# Output binary
+set(OUT app)
 
-# Libraries
+# Platform-specific libraries
 if(WIN32)
-    target_link_libraries(app PRIVATE glfw3 glew32 opengl32)
+    # Windows: Bundled MinGW
+    set(LIBS glfw3 glew32 opengl32)
 elseif(APPLE)
-    target_link_libraries(app PRIVATE glfw GLEW "-framework OpenGL")
+    # macOS frameworks
+    set(LIBS glfw GLEW "-framework OpenGL")
 else()
-    target_link_libraries(app PRIVATE glfw GLEW GL)
+    # Linux
+    set(LIBS glfw GLEW GL)
 endif()
+
+# Add executable
+add_executable(${OUT} ${SRC})
+
+# Link libraries
+target_link_libraries(${OUT} PRIVATE ${LIBS})
