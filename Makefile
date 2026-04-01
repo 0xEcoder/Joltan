@@ -1,6 +1,6 @@
-CC = gcc
+CC = g++
 CFLAGS = -Wall -O2
-SRC = $(wildcard src/*.c)
+SRC = $(wildcard src/*.cpp)
 
 
 OUT = bin/app

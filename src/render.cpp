@@ -1,15 +1,14 @@
 #include <GL/glew.h>
 #include <stdio.h>
-#include "include/render.h"
-#include "include/camera.h"
+#include "include/render.hpp"
+#include "include/camera.hpp"
 
 GLuint shader;
 GLuint VAO, VBO;
 GLuint MVP_loc;
 
 
-void render_init(void)
-{
+void render_init(void) {
     glEnable(GL_DEPTH_TEST);
 
     // ----- Vertex shader -----
@@ -56,12 +55,9 @@ void render_init(void)
     if (MVP_loc == -1) {
         printf("Warning: Uniform 'MVP' not found in shader.\n");
     }
-
-
-
 }
 
-void render_draw(float aspect)   // added aspect parameter
+void render_draw(float aspect) // added aspect parameter
 {
     glUseProgram(shader);
 
@@ -72,9 +68,9 @@ void render_draw(float aspect)   // added aspect parameter
     perspective(projection, 45.0f, aspect, 0.1f, 100.0f);
 
     // View: eye at (2,2,2) looking at origin, up = (0,1,0)
-    float eye[]    = {2.0f, 2.0f, 2.0f};
+    float eye[] = {2.0f, 2.0f, 2.0f};
     float center[] = {0.0f, 0.0f, 0.0f};
-    float up[]     = {0.0f, 1.0f, 0.0f};
+    float up[] = {0.0f, 1.0f, 0.0f};
     lookAt(view, eye, center, up);
 
     // Model: identity (no extra transformation)
@@ -85,7 +81,6 @@ void render_draw(float aspect)   // added aspect parameter
     multiply(mvp, mvp, model);
 
     glUniformMatrix4fv(MVP_loc, 1, GL_FALSE, mvp);
-
 
 
     // Unbind (optional) hides triange for some reason
