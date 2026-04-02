@@ -1,9 +1,7 @@
 #include <GL/glew.h>    // must be first
 #include <GLFW/glfw3.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
 
-#include "include/camera.hpp"
 #include "include/render.hpp"
 #include "include/shapes.hpp"
 #include "include/GameObject.hpp"
@@ -27,7 +25,7 @@ int main(void) {
 
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
-        printf("GLEW init failed\n");
+        std::cout << "GLEW init failed\n" << std::endl;
         return -1;
     }
 
@@ -69,9 +67,21 @@ int main(void) {
         0.5f, -0.5f, -0.5f,
         -0.5f, -0.5f, -0.5f,
     };
+    float planeVerts[] = {
+        // first triangle
+        -0.5f, 0.0f, -0.5f,
+         0.5f, 0.0f, -0.5f,
+         0.5f, 0.0f,  0.5f,
+
+        // second triangle
+        -0.5f, 0.0f, -0.5f,
+         0.5f, 0.0f,  0.5f,
+        -0.5f, 0.0f,  0.5f
+    };
 
     init_pyramid(pyramidVerts, sizeof(pyramidVerts));
-    GameObject pyramid;
+    init_plane2D(planeVerts, sizeof(planeVerts));
+    GameObject Pyramid;
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -80,12 +90,13 @@ int main(void) {
         glfwGetFramebufferSize(window, &w, &h);
         float aspect = (h > 0) ? (float) w / (float) h : 1.0f;
 
-        pyramid.rotation.y += 0.01f;
+        Pyramid.rotation.y += 0.01f;
 
-        render_draw(aspect, pyramid.getModelMatrix());
-        draw_pyramid();
+        render_draw(aspect, Pyramid.getModelMatrix());
+        pyramid();
+        plane2D();
 
-        draw_pyramid();
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

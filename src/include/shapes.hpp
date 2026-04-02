@@ -6,6 +6,8 @@
 #define JOLTAN_SHAPES_H
 
 void init_pyramid(float *verts, size_t size);
-void draw_pyramid();
+void pyramid();
+void init_plane2D(float *verts, size_t size);
+void plane2D();
 
 #endif //JOLTAN_SHAPES_H

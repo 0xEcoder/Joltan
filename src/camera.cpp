@@ -20,7 +20,7 @@ const char *fragOrange =
         "#version 330 core\n"
         "out vec4 FragColor;\n"
         "void main() {\n"
-        "    FragColor = vec4(0.7, 0.5, 0.6, 1.0);\n"
+        "    FragColor = vec4(1.0, 0.5, 0, 1.0);\n"
         "}\n";
 
 // Set matrix to identity
