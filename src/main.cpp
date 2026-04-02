@@ -5,6 +5,7 @@
 #include "include/render.hpp"
 #include "include/shapes.hpp"
 #include "include/GameObject.hpp"
+#include "include/parseshader.hpp"
 
 #define TITLE "Joltan ALPHA 0.01"
 
@@ -82,6 +83,7 @@ int main(void) {
     init_pyramid(pyramidVerts, sizeof(pyramidVerts));
     init_plane2D(planeVerts, sizeof(planeVerts));
     GameObject Pyramid;
+    GameObject Plane2D;
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -94,6 +96,7 @@ int main(void) {
 
         render_draw(aspect, Pyramid.getModelMatrix());
         pyramid();
+        render_draw(aspect, Plane2D.getModelMatrix());
         plane2D();
 
 

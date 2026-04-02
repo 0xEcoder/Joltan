@@ -1,6 +1,5 @@
 #include <GL/glew.h>
 #include "include/render.hpp"
-#include "include/camera.hpp"
 #include "include/shapes.hpp"
 
 // TRIANGLES

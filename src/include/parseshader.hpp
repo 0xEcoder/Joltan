@@ -5,14 +5,11 @@
 
 #ifndef JOLTAN_PARSESHADER_HPP
 #define JOLTAN_PARSESHADER_HPP
-#include <GL/GLFW.h>
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 
 
-struct Material
-{
-    GLuint shader;
-};
+std::string readshader(const std::string& filepath);
 
 #endif //JOLTAN_PARSESHADER_HPP

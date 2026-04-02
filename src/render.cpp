@@ -1,18 +1,47 @@
 #include <GL/glew.h>
 #include <iostream>
+#include <string>
+
 #include "include/render.hpp"
-#include "include/camera.hpp"
+
+#include "include/parseshader.hpp"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#define BASE_FRAG_FILE "shaders/fragments/base.frag"
+#define BASE_VERT_FILE "shaders/verts/base.vert"
+
+// ----- Globals -----
 GLuint shader;
 GLuint VAO, VBO;
 GLuint MVP_loc;
 
+// Example vertex shader (make sure this exists somewhere)
 
-void render_init(void) {
+// ----- Init -----
+void render_init(void)
+{
     glEnable(GL_DEPTH_TEST);
+
+    // Load fragment shader from file
+    std::string fragStr = readshader(BASE_FRAG_FILE);
+    std::string vertStr = readshader(BASE_VERT_FILE);
+
+    if (fragStr.empty())
+    {
+        std::cerr << "ERROR: Fragment shader file failed to load.\n";
+        return;
+    }
+    if (vertStr.empty())
+    {
+        std::cerr << "ERROR: Fragment shader file failed to load.\n";
+        return;
+    }
+    const char* fragSrc = fragStr.c_str();
+    const char* vertSrc = vertStr.c_str();
+
 
     // ----- Vertex shader -----
     GLuint vert = glCreateShader(GL_VERTEX_SHADER);
@@ -21,21 +50,24 @@ void render_init(void) {
 
     GLint success;
     char infoLog[512];
+
     glGetShaderiv(vert, GL_COMPILE_STATUS, &success);
-    if (!success) {
+    if (!success)
+    {
         glGetShaderInfoLog(vert, sizeof(infoLog), NULL, infoLog);
-        std::cout << "Vertex shader compilation failed:\n%s\n" << infoLog << std::endl;
+        std::cerr << "Vertex shader compilation failed:\n" << infoLog << std::endl;
     }
 
     // ----- Fragment shader -----
     GLuint frag = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(frag, 1, &fragOrange, NULL);
+    glShaderSource(frag, 1, &fragSrc, NULL);
     glCompileShader(frag);
 
     glGetShaderiv(frag, GL_COMPILE_STATUS, &success);
-    if (!success) {
+    if (!success)
+    {
         glGetShaderInfoLog(frag, sizeof(infoLog), NULL, infoLog);
-        printf("Fragment shader compilation failed:\n%s\n", infoLog);
+        std::cerr << "Fragment shader compilation failed:\n" << infoLog << std::endl;
     }
 
     // ----- Shader program -----
@@ -45,21 +77,26 @@ void render_init(void) {
     glLinkProgram(shader);
 
     glGetProgramiv(shader, GL_LINK_STATUS, &success);
-    if (!success) {
+    if (!success)
+    {
         glGetProgramInfoLog(shader, sizeof(infoLog), NULL, infoLog);
-        printf("Shader linking failed:\n%s\n", infoLog);
+        std::cerr << "Shader linking failed:\n" << infoLog << std::endl;
     }
 
+    // Cleanup
     glDeleteShader(vert);
     glDeleteShader(frag);
 
-    // Cache uniform location and check
+    // Get uniform location
     MVP_loc = glGetUniformLocation(shader, "MVP");
-    if (MVP_loc == -1) {
-        printf("Warning: Uniform 'MVP' not found in shader.\n");
+    if (MVP_loc == -1)
+    {
+        std::cerr << "Warning: Uniform 'MVP' not found.\n";
     }
 }
 
+
+// ----- Draw -----
 void render_draw(float aspect, const glm::mat4& model)
 {
     glUseProgram(shader);

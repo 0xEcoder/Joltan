@@ -1,29 +1,25 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string>
 
 #include "include/parseshader.hpp"
 
-Material load_material(const char* path)
+#include "../../../../../Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iosfwd"
+#include "../../../../../Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/string"
+
+std::string readshader(const std::string& filepath)
 {
-    Material mat;
+    std::ifstream file(filepath);
 
-    std::ifstream file(path);
-    std::string line;
-
-    std::string vert, frag;
-
-    while (std::getline(file, line))
+    if (!file.is_open())
     {
-        if (line.find("shader_vert") != std::string::npos)
-            vert = line.substr(line.find("=") + 2);
-
-        if (line.find("shader_frag") != std::string::npos)
-            frag = line.substr(line.find("=") + 2);
+        std::cerr << "Error: Could not open file: " << filepath << std::endl;
+        return "";
     }
 
-    mat.shader = create_shader_program(vert.c_str(), frag.c_str());
+    std::stringstream buffer;
+    buffer << file.rdbuf();  // read entire file into buffer
 
-    return mat;
+    return buffer.str();     // return as string
 }
-
