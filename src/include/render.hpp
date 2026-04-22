@@ -7,7 +7,7 @@
 
 #elif defined(__APPLE__) && defined(__MACH__)
     // macOS (you’ll probably want OpenGL headers like this)
-    #include <OpenGL/gl3.h>
+    #include <GL/glew.h>
 
 #elif defined(__linux__)
     #include <GL/glew.h>
@@ -17,9 +17,9 @@
 #endif
 
 // Common includes
-#include "external/universal/glm/glm/glm.hpp"
-#include "external/universal/glm/glm/gtc/matrix_transform.hpp"
-#include "external/universal/glm/glm/gtc/type_ptr.hpp"
+#include "../external/universal/glm/glm/glm.hpp"
+#include "../external/universal/glm/glm/gtc/matrix_transform.hpp"
+#include "../external/universal/glm/glm/gtc/type_ptr.hpp"
 
 // Functions
 void render_init(void);

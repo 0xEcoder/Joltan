@@ -2,8 +2,11 @@
     #include "external/win32/include/GL/glew.h"
     #include "external/win32/include/GLFW/glfw3.h"
 #elif defined(__APPLE__) || defined(__MACH__)
-    // macOS
+    #include <GLFW/glfw3.h>
+    #include <GL/glew.h>
 #elif defined(__linux__)
+    #include <GL/glew.h>
+    #include <GLFW/glfw3.h>
     // Linux
 #endif
 #include "external/universal/glm/glm/glm.hpp"
@@ -106,8 +109,7 @@ int main(void) {
 
         Pyramid.rotation.y += 0.01f;
 
-        render_draw(aspect, Pyramid.getModelMatrix());
-        pyramid();
+        
         
 
 

@@ -1,6 +1,16 @@
-#include <GL/glew.h>
-#include "include/render.hpp"
-#include "include/shapes.hpp"
+#if defined(_WIN32) || defined(_WIN64)
+    #include "external/win32/include/GL/glew.h"
+    #include "external/win32/include/GLFW/glfw3.h"
+#elif defined(__APPLE__) || defined(__MACH__)
+    #include <GLFW/glfw3.h>
+    #include <GL/glew.h>
+#elif defined(__linux__)
+    #include <GLFW/glfw3.h>
+    #include <GL/glew.h>
+    // Linux
+#endif
+
+#include <include/Instances.hpp>
 
 // TRIANGLES
 void init_pyramid(float *verts, size_t size) {
