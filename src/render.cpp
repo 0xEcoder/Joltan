@@ -5,13 +5,14 @@
 #include "include/render.hpp"
 
 #include "include/parseshader.hpp"
+#include "include/findbinary.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#define BASE_FRAG_FILE "shaders/fragments/base.frag"
-#define BASE_VERT_FILE "shaders/verts/base.vert"
+#define BASE_FRAG_FILE "/shaders/fragments/base.frag"
+#define BASE_VERT_FILE "/shaders/verts/base.vert"
 
 // ----- Globals -----
 GLuint shader;
@@ -24,10 +25,11 @@ GLuint MVP_loc;
 void render_init(void)
 {
     glEnable(GL_DEPTH_TEST);
-
+    std::string basefrag = getBinaryDir() + BASE_FRAG_FILE;
+    std::string basevert = getBinaryDir() + BASE_VERT_FILE;
     // Load fragment shader from file
-    std::string fragStr = readshader(BASE_FRAG_FILE);
-    std::string vertStr = readshader(BASE_VERT_FILE);
+    std::string fragStr = readshader(basefrag);
+    std::string vertStr = readshader(basevert);
 
     if (fragStr.empty())
     {
@@ -100,6 +102,14 @@ void render_init(void)
 void render_draw(float aspect, const glm::mat4& model)
 {
     glUseProgram(shader);
+
+    glm::vec3 objectColor(1.0f, 1.0f, 1.0f); // any color
+    glm::vec3 lightPos(2.0f, 4.0f, 2.0f);
+    glm::vec3 viewPos(2.0f, 2.0f, 2.0f);
+
+    glUniform3fv(glGetUniformLocation(shader, "color"), 1, glm::value_ptr(objectColor));
+    glUniform3fv(glGetUniformLocation(shader, "lightPos"), 1, glm::value_ptr(lightPos));
+    glUniform3fv(glGetUniformLocation(shader, "viewPos"), 1, glm::value_ptr(viewPos));
 
     glm::mat4 projection = glm::perspective(
         glm::radians(45.0f),
