@@ -1,5 +1,14 @@
-#include <GL/glew.h>    // must be first
-#include <GLFW/glfw3.h>
+#if defined(_WIN32) || defined(_WIN64)
+    #include "external/win32/include/GL/glew.h"
+    #include "external/win32/include/GLFW/glfw3.h"
+#elif defined(__APPLE__) || defined(__MACH__)
+    // macOS
+#elif defined(__linux__)
+    // Linux
+#endif
+#include "external/universal/glm/glm/glm.hpp"
+#include "external/universal/glm/glm/gtc/matrix_transform.hpp"
+#include "external/universal/glm/glm/gtc/type_ptr.hpp"
 #include <iostream>
 
 #include "include/render.hpp"
@@ -99,8 +108,7 @@ int main(void) {
 
         render_draw(aspect, Pyramid.getModelMatrix());
         pyramid();
-        render_draw(aspect, Plane2D.getModelMatrix());
-        plane2D();
+        
 
 
         glfwSwapBuffers(window);

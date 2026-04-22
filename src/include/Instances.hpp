@@ -5,6 +5,9 @@
 #ifndef JOLTAN_INSTANCES_HPP
 #define JOLTAN_INSTANCES_HPP
 
+#include "render.hpp"
+#include "../external/include/GL/glew.h"
+
 struct Component {
     virtual void init() {}
     virtual void update(float dt) {}
@@ -15,7 +18,18 @@ struct Component {
 
 
 struct MeshRender : Component {
-    float Verts[] {}
+    std::vector<float> verts;
+    GLuint shader;
+    GLuint VAO, VBO;
+    GLuint MVP_loc;
+
+    void init() override {
+        render_init();
+    }
+    void update() override {
+        render_draw();
+    }
+    
 }
 
 #endif //JOLTAN_INSTANCES_HPP

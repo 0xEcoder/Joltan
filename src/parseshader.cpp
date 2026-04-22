@@ -3,10 +3,16 @@
 #include <sstream>
 #include <string>
 
-#include "include/parseshader.hpp"
-
-#include "../../../../../Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iosfwd"
-#include "../../../../../Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/string"
+#if defined(_WIN32) || defined(_WIN64)
+    #include "external/win32/include/GL/glew.h"
+#elif defined(__APPLE__) || defined(__MACH__)
+    // macOS
+#elif defined(__linux__)
+    // Linux
+#endif
+#include "external/universal/glm/glm/glm.hpp"
+#include "external/universal/glm/glm/gtc/matrix_transform.hpp"
+#include "external/universal/glm/glm/gtc/type_ptr.hpp"
 
 std::string readshader(const std::string& filepath)
 {

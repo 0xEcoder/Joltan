@@ -5,8 +5,19 @@
 
 #ifndef JOLTAN_PARSESHADER_HPP
 #define JOLTAN_PARSESHADER_HPP
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#if defined(_WIN32) || defined(_WIN64)
+    #include "external/win32/include/GL/glew.h"
+
+#elif defined(__APPLE__) && defined(__MACH__)
+    // macOS (you’ll probably want OpenGL headers like this)
+  
+
+#elif defined(__linux__)
+    
+
+#else
+    #error "Unsupported platform"
+#endif
 
 
 

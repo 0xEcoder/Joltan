@@ -1,8 +1,9 @@
 #ifndef JOLTAN_GAMEOBJECT_HPP
 #define JOLTAN_GAMEOBJECT_HPP
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "external/universal/glm/glm/glm.hpp"
+#include "external/universal/glm/glm/gtc/matrix_transform.hpp"
+#include "external/universal/glm/glm/gtc/type_ptr.hpp"
 
 struct GameObject
 {
@@ -24,6 +25,16 @@ struct GameObject
 
         return model;
     }
+
+    template<typename T, typename... Args>
+    T* AddComponent(Args&&... args)
+    {
+        T* comp = new T(std::forward<Args>(args)...);
+        components.emplace_back(comp);
+        comp->init(); // optional: auto-init when added
+        return comp;
+    }
+
 };
 
 #endif // JOLTAN_GAMEOBJECT_HPP

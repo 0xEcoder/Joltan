@@ -1,15 +1,18 @@
-#include <GL/glew.h>
+#if defined(_WIN32) || defined(_WIN64)
+    #include "external/win32/include/GL/glew.h"
+#elif defined(__APPLE__) || defined(__MACH__)
+    // macOS
+#elif defined(__linux__)
+    // Linux
+#endif
+#include "external/universal/glm/glm/glm.hpp"
+#include "external/universal/glm/glm/gtc/matrix_transform.hpp"
+#include "external/universal/glm/glm/gtc/type_ptr.hpp"
 #include <iostream>
 #include <string>
 
 #include "include/render.hpp"
-
 #include "include/parseshader.hpp"
-#include "include/findbinary.hpp"
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 #define BASE_FRAG_FILE "/shaders/fragments/base.frag"
 #define BASE_VERT_FILE "/shaders/verts/base.vert"
