@@ -13,6 +13,7 @@
 
 #include "include/render.hpp"
 #include "include/parseshader.hpp"
+#include "include/findbinary.hpp"
 
 #define BASE_FRAG_FILE "/shaders/fragments/base.frag"
 #define BASE_VERT_FILE "/shaders/verts/base.vert"
@@ -135,4 +136,5 @@ void render_draw(float aspect, const glm::mat4& model)
         GL_FALSE,
         glm::value_ptr(mvp)
     );
+    
 }

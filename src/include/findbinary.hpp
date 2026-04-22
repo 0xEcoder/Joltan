@@ -4,6 +4,7 @@
 
 #ifndef JOLTAN_FINDBINARY_HPP
 #define JOLTAN_FINDBINARY_HPP
+#pragma once
 #include <string>
 
 

@@ -8,51 +8,59 @@ CFLAGS = -Wall -O2
 # Sources and output
 # -------------------------
 SRC = $(wildcard src/*.cpp)
-FOLDER_NAME = Joltan
 BIN = bin
-OUT = $(BIN)/$(FOLDER_NAME)/$(FOLDER_NAME)
-
-# Shaders folder
-SHADERS_SRC = src/shaders
-SHADERS_DST = $(BIN)/$(FOLDER_NAME)/shaders
+OUT = $(BIN)/Joltan
 
 # -------------------------
-# Platform-specific libraries
+# Shaders
+# -------------------------
+SHADERS_SRC = src/shaders
+SHADERS_DST = $(BIN)/Joltan/shaders
+
+# -------------------------
+# Libraries
 # -------------------------
 ifeq ($(OS),Windows_NT)
-    LIBS = -lopengl32 -lglew32 -lgdi32 -luser32 -lkernel32 -lm
-else ifeq ($(shell uname),Darwin)
-    LIBS = -framework OpenGL -lglfw -lGLEW -lm
+    LIBS = -lopengl32 -lglew32 -lgdi32
+    MKDIR = mkdir
+    COPY = cp -r
+    RM = rm -rf
 else
-    LIBS = -lGL -lglfw -lGLEW -lm
+    UNAME_S := $(shell uname -s)
+
+    ifeq ($(UNAME_S),Darwin)
+        LIBS = -framework OpenGL -lglfw -lGLEW
+    else
+        LIBS = -lGL -lglfw -lGLEW
+    endif
+
+    MKDIR = mkdir -p
+    COPY = cp -r
+    RM = rm -rf
 endif
 
 # -------------------------
-# Default target
+# Build
 # -------------------------
 all: $(OUT)
 
-# -------------------------
-# Build binary
-# -------------------------
 $(OUT): $(SRC)
-	@echo "Building $(OUT)..."
-	mkdir -p $(BIN)/$(FOLDER_NAME)
+	@echo "Building..."
+	$(MKDIR) -p $(BIN)
 	$(CC) $(CFLAGS) $(SRC) $(LIBS) -o $(OUT)
-	@echo "Copying shaders into $(FOLDER_NAME)..."
-	mkdir -p $(SHADERS_DST)
-	cp -rf $(SHADERS_SRC)/* $(SHADERS_DST)/
 
-# -------------------------
-# Clean
-# -------------------------
-clean:
-	@echo "Cleaning $(BIN)..."
-	rm -rf $(BIN)
+	@echo "Copying shaders..."
+	$(MKDIR) -p $(SHADERS_DST)
+	$(COPY) $(SHADERS_SRC)/* $(SHADERS_DST)/
 
 # -------------------------
 # Run
 # -------------------------
 run: $(OUT)
-	@echo "Running $(OUT)..."
 	./$(OUT)
+
+# -------------------------
+# Clean
+# -------------------------
+clean:
+	$(RM) $(BIN)
