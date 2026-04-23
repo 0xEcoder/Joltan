@@ -3,7 +3,7 @@
 
 // Platform-specific includes
 #if defined(_WIN32) || defined(_WIN64)
-    #include "external/win32/include/GL/glew.h"
+    #include "../external/win32/include/GL/glew.h"
 
 #elif defined(__APPLE__) && defined(__MACH__)
     // macOS (you’ll probably want OpenGL headers like this)
